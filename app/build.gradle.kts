@@ -106,10 +106,15 @@ dependencies {
     // Hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     // coil
     implementation("io.coil-kt:coil:2.5.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
+
+
+    // Compose - Viewmodel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 }
 kapt {
     correctErrorTypes = true
