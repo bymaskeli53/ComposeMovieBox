@@ -102,6 +102,8 @@ dependencies {
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
@@ -115,6 +117,11 @@ dependencies {
 
     // Compose - Viewmodel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+    // testing
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2")
+    testImplementation("io.mockk:mockk:1.12.0") // Optional if you need to use mockk
+    testImplementation("app.cash.turbine:turbine:0.6.1")
 }
 kapt {
     correctErrorTypes = true
