@@ -6,8 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun DetailsScreen(modifier: Modifier = Modifier) {
+fun DetailsScreen(modifier: Modifier = Modifier,movieId: Int?) {
     Row {
-        Text(text = "Details Screen")
+        Text(text = "Movie ID: $movieId")
     }
+
 }

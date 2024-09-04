@@ -16,13 +16,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         
         setContent {
-            val viewModel: MovieViewModel = hiltViewModel()
-         // Navigation()
+           // val viewModel: MovieViewModel = hiltViewModel()
+          Navigation()
 
-            LaunchedEffect(Unit){
-            viewModel.fetchMovies()
-            }
-            MoviesScreen()
+            //MoviesScreen()
         }
     }
 }

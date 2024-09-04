@@ -17,6 +17,12 @@ class MovieViewModel
         private val _state = MutableStateFlow<ApiResult<MovieResponse>>(ApiResult.Loading())
         val state: StateFlow<ApiResult<MovieResponse>> = _state
 
+    fun onAction(action: MovieAction) {
+        when (action) {
+            is MovieAction.MovieClicked -> { }
+            }
+        }
+
         fun fetchMovies() {
             viewModelScope.launch {
                 movieRepository

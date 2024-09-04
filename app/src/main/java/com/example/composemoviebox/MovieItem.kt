@@ -30,15 +30,17 @@ import com.example.composemoviebox.ui.theme.RedMixedOrange
 fun MovieListItem(
     modifier: Modifier = Modifier,
     movie: Movie,
+    onClick: (Int) -> Unit,
 ) {
     Card(
+
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(8.dp),
         modifier =
             Modifier
                 .fillMaxWidth()
                 .background(color = RedMixedOrange)
-                .clickable { },
+                .clickable { movie.id?.let { onClick(it) }},
     ) {
         Row(
             modifier =
@@ -68,15 +70,6 @@ fun MovieListItem(
             }
             Spacer(modifier = Modifier.weight(1f))
             Column(modifier = Modifier.align(Alignment.CenterVertically)) {
-                Image(
-                    modifier =
-                        Modifier
-                            .width(80.dp)
-                            .height(40.dp),
-                    painter = painterResource(id = R.drawable.arrow_right),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                )
 
                 Spacer(modifier = modifier.size(12.dp))
 

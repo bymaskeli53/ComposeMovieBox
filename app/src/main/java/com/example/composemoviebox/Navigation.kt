@@ -13,10 +13,18 @@ fun Navigation() {
         startDestination = Screen.MoviesScreen.route,
     ) {
         composable(route = Screen.MoviesScreen.route) {
-            MoviesScreen(navController)
+            MoviesScreen(navController, onAction = { action ->
+                when (action) {
+                    is MovieAction.MovieClicked -> {
+                        navController.navigate("${Screen.DetailsScreen.route}/${action.movieId}")
+                    }
+                }
+            })
         }
-        composable(route = Screen.DetailsScreen.route) {
-            DetailsScreen()
+        composable(route = "${Screen.DetailsScreen.route}/{movieId}") { backStackEntry ->
+            val movieId = backStackEntry.arguments?.getString("movieId")?.toIntOrNull()
+
+            DetailsScreen(movieId = movieId)
         }
     }
 }
