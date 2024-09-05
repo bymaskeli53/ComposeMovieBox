@@ -83,14 +83,15 @@ fun DetailsScreen(
 
                     RatingBar(rating = movie.vote_average.toString())
                     Spacer(modifier = Modifier.height(16.dp))
-
-                    Text(
-                        text = movie.overview ?: "No Overview",
-                        fontSize = 16.sp,
-                        maxLines = 3,
-                        overflow = TextOverflow.Ellipsis,
-                        color = Color.White,
-                    )
+//
+//                    Text(
+//                        text = movie.overview ?: "No Overview",
+//                        fontSize = 16.sp,
+//                        maxLines = 3,
+//                        overflow = TextOverflow.Ellipsis,
+//                        color = Color.White,
+//                    )
+                    ExpandableText(text = movie.overview)
                 }
             }
         }
