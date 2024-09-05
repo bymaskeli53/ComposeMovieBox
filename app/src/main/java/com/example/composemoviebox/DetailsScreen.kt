@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -83,15 +84,8 @@ fun DetailsScreen(
 
                     RatingBar(rating = movie.vote_average.toString())
                     Spacer(modifier = Modifier.height(16.dp))
-//
-//                    Text(
-//                        text = movie.overview ?: "No Overview",
-//                        fontSize = 16.sp,
-//                        maxLines = 3,
-//                        overflow = TextOverflow.Ellipsis,
-//                        color = Color.White,
-//                    )
-                    ExpandableText(text = movie.overview)
+
+                    ExpandableText(text = movie.overview,modifier = Modifier.padding(12.dp))
                 }
             }
         }

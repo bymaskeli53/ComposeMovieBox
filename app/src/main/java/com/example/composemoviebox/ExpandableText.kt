@@ -15,16 +15,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ExpandableText(text: String) {
+fun ExpandableText(text: String,modifier: Modifier = Modifier) {
     var isExpanded by remember { mutableStateOf(false) }
 
-    Column {
+    Column(modifier = modifier) {
         Text(
             text = text,
             maxLines = if (isExpanded) Int.MAX_VALUE else 3,
             fontSize = 16.sp,
             color = Color.White,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
+
         )
 
         Text(
