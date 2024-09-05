@@ -63,3 +63,5 @@ val Yellow4 = Color(0xFF8B8B00)
 val Sienna4 = Color(0xFF8B4726)
 
 val AgedPaper = Color(0xFFECAB53)
+
+val bg_details = Color(0xFF2b292c)
