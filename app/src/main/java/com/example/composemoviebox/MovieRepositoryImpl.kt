@@ -22,4 +22,17 @@ class MovieRepositoryImpl
                     emit(ApiResult.Error(e))
                 }
             }.flowOn(Dispatchers.IO)
+
+    override fun getMovieDetails(movieId: Int): Flow<ApiResult<MovieDetailsResponse>> =
+        flow {
+            emit(ApiResult.Loading())
+            try {
+                val movieDetails = movieService.getMovieDetails(movieId)
+                emit(ApiResult.Success(movieDetails))
+            } catch (e: Exception) {
+                emit(ApiResult.Error(e))
+        }
+
+
+}.flowOn(Dispatchers.IO)
     }
