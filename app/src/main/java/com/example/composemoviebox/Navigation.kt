@@ -1,13 +1,20 @@
 package com.example.composemoviebox
 
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun Navigation() {
-    val navController = rememberNavController()
+fun Navigation(navController : NavHostController,modifier : Modifier = Modifier) {
+  //  val navController = rememberNavController()
+    
+
+
     NavHost(
         navController = navController,
         startDestination = Screen.MoviesScreen.route,
@@ -26,5 +33,9 @@ fun Navigation() {
 
             DetailsScreen(movieId = movieId)
         }
+        composable(route = Screen.FavoritesScreen.route){
+            FavoritesScreen()
+        }
+
     }
 }
