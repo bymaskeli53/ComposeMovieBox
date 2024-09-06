@@ -10,6 +10,7 @@ class MovieRepositoryImpl
     @Inject
     constructor(
         private val movieService: MovieService,
+        private val movieDao: MovieDao
     ) : MovieRepository {
 
         override fun getPopularMovies(): Flow<ApiResult<MovieResponse>> =
@@ -34,5 +35,19 @@ class MovieRepositoryImpl
         }
 
 
-}.flowOn(Dispatchers.IO)
+
+
+        }.flowOn(Dispatchers.IO)
+
+    override suspend fun addFavoriteMovie(movie: FavoriteMovieEntity) {
+        movieDao.insertFavoriteMovie(movie)
     }
+
+    override suspend fun removeFavoriteMovie(movie: FavoriteMovieEntity) {
+        movieDao.deleteFavoriteMovie(movie)
+    }
+
+    override suspend fun getFavoriteMovies() {
+        movieDao.getAllFavoriteMovies()
+    }
+}

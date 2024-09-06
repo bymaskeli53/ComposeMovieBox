@@ -62,6 +62,7 @@ object NetworkModule {
     @Singleton
     fun provideMovieRepository(
         movieService: MovieService,
+        movieDao: MovieDao
 
-    ): MovieRepository = MovieRepositoryImpl(movieService)
+    ): MovieRepository = MovieRepositoryImpl(movieService,movieDao)
 }

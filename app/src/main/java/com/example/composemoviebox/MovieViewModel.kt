@@ -28,6 +28,25 @@ class MovieViewModel
             }
         }
 
+        fun addFavoriteMovie(movie: FavoriteMovieEntity) {
+            viewModelScope.launch {
+                movieRepository.addFavoriteMovie(movie)
+            }
+        }
+
+        fun removeFavoriteMovie(movie: FavoriteMovieEntity) {
+            viewModelScope.launch {
+                movieRepository.removeFavoriteMovie(movie)
+            }
+        }
+
+        fun getFavoriteMovies() {
+            viewModelScope.launch {
+                val favorites = movieRepository.getFavoriteMovies()
+                // Handle favorite movies
+            }
+        }
+
         fun fetchMovies() {
             fetchData(
                 fetch = { movieRepository.getPopularMovies() },
