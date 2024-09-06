@@ -20,7 +20,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.composemoviebox.CustomTestRunner"
+
 
         val localProperties = Properties()
         val localPropertiesFile = rootProject.file("local.properties")
@@ -88,6 +89,7 @@ dependencies {
 
     // navigation
     implementation("androidx.navigation:navigation-compose:$nav_version")
+    androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
 
     // retrofit & OkHttp
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.12.0"))
@@ -109,6 +111,8 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.51.1")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.51.1")
 
     // coil
     implementation("io.coil-kt:coil:2.5.0")

@@ -47,6 +47,26 @@ class MovieViewModelTest {
 
     @OptIn(ExperimentalTime::class)
     @Test
+    fun `fetchMoviesDetails returns success`() = runTest {
+        // Arrange
+        val movieResponse = MovieDetailsResponse(
+           id = 2, overview = "Test movie 2", poster_path = "path2", title = "Movie 2", vote_average = 8.0, release_date = "2023-09-05"
+        )
+        fakeMovieRepository.setMovieDetailsResponse(movieResponse)
+
+        // Act
+        movieViewModel.fetchMovieDetails(533535)
+
+        // Assert
+        movieViewModel.detailsState.test {
+            // assertEquals(ApiResult.Loading<MovieResponse>(), awaitItem())
+            assertEquals(ApiResult.Success(movieResponse), awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @OptIn(ExperimentalTime::class)
+    @Test
     fun `fetchMovies returns error`() = runTest {
         // Arrange
         val exception = RuntimeException("Error occurred")
@@ -59,6 +79,27 @@ class MovieViewModelTest {
         movieViewModel.state.test {
             //assertEquals(ApiResult.Loading<MovieResponse>(), awaitItem())
            // assertEquals(ApiResult.Error<MovieResponse>(exception = exception, data = null),awaitItem())
+            val result = awaitItem()
+            assert(result is ApiResult.Error && result.exception.message == exception.message)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+
+    @OptIn(ExperimentalTime::class)
+    @Test
+    fun `fetchMovieDetails returns error`() = runTest {
+        // Arrange
+        val exception = RuntimeException("Error occurred")
+        fakeMovieRepository.setShouldReturnError(true)
+
+        // Act
+        movieViewModel.fetchMovieDetails(533535)
+
+        // Assert
+        movieViewModel.detailsState.test {
+            //assertEquals(ApiResult.Loading<MovieResponse>(), awaitItem())
+            // assertEquals(ApiResult.Error<MovieResponse>(exception = exception, data = null),awaitItem())
             val result = awaitItem()
             assert(result is ApiResult.Error && result.exception.message == exception.message)
             cancelAndIgnoreRemainingEvents()

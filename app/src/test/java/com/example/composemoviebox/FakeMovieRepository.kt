@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.flow
 class FakeMovieRepository : MovieRepository {
     private var shouldReturnError = false
     private var moviesResponse: MovieResponse? = null
+    private var movieDetailsResponse: MovieDetailsResponse? = null
 
     fun setShouldReturnError(value: Boolean) {
         shouldReturnError = value
@@ -13,6 +14,10 @@ class FakeMovieRepository : MovieRepository {
 
     fun setMoviesResponse(response: MovieResponse) {
         moviesResponse = response
+    }
+
+    fun setMovieDetailsResponse(response: MovieDetailsResponse) {
+            movieDetailsResponse = response
     }
 
     override fun getPopularMovies(): Flow<ApiResult<MovieResponse>> = flow {
@@ -26,5 +31,19 @@ class FakeMovieRepository : MovieRepository {
             }
         }
     }
+
+    override fun getMovieDetails(movieId: Int): Flow<ApiResult<MovieDetailsResponse>> = flow {
+        emit(ApiResult.Loading())
+
+        if (shouldReturnError) {
+            emit(ApiResult.Error(RuntimeException("Error occurred")))
+        } else {
+            movieDetailsResponse?.let {
+                emit(ApiResult.Success(it))
+            }
+        }
+    }
+
+
 }
 
