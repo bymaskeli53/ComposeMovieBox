@@ -14,6 +14,8 @@ android {
     namespace = "com.example.composemoviebox"
     compileSdk = 34
 
+
+
     defaultConfig {
         applicationId = "com.example.composemoviebox"
         minSdk = 24
@@ -21,8 +23,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "com.example.composemoviebox.CustomTestRunner"
-
+       // testInstrumentationRunner = "com.example.composemoviebox.CustomTestRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         val localProperties = Properties()
         val localPropertiesFile = rootProject.file("local.properties")
@@ -31,6 +33,8 @@ android {
                 localProperties.load(it)
             }
         }
+
+
 
         buildConfigField("String", "API_KEY", "\"${localProperties["API_KEY"]}\"")
 
@@ -70,9 +74,14 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.androidx.junit.ktx)
     val nav_version = "2.7.7"
 
     val room_version = "2.6.1"
+
+
+    testImplementation("androidx.room:room-testing:$room_version")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -136,6 +145,13 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2")
     testImplementation("io.mockk:mockk:1.12.0") // Optional if you need to use mockk
     testImplementation("app.cash.turbine:turbine:0.6.1")
+
+    androidTestImplementation(libs.androidx.junit)
+    testImplementation(libs.junit)
+    androidTestImplementation("android.arch.core:core-testing:1.1.1")
+
+
+
 }
 kapt {
     correctErrorTypes = true

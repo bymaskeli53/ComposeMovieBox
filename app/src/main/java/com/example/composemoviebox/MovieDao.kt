@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface MovieDao {
 
-    @Query("SELECT * FROM favorite_movies")
+    @Query("SELECT * FROM favorite_movies ORDER BY title ASC")
     suspend fun getAllFavoriteMovies() : List<FavoriteMovieEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

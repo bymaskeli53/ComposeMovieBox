@@ -44,6 +44,18 @@ class FakeMovieRepository : MovieRepository {
         }
     }
 
+    override suspend fun addFavoriteMovie(movie: FavoriteMovieEntity) {
+
+    }
+
+    override suspend fun removeFavoriteMovie(movie: FavoriteMovieEntity) {
+
+    }
+
+    override suspend fun getFavoriteMovies() {
+
+    }
+
 
 }
 
