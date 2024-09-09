@@ -4,6 +4,8 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,16 +26,19 @@ class MovieViewModel
             MutableStateFlow<ApiResult<MovieDetailsResponse>>(ApiResult.Loading())
         val detailsState: StateFlow<ApiResult<MovieDetailsResponse>> = _detailState
 
+        private val _pagingState = MutableStateFlow<PagingData<Movie>?>(null)
+        val pagingState: Flow<PagingData<Movie>?> = _pagingState
+
+    val moviesData: Flow<PagingData<Movie>> = movieRepository.getPopularMovies()
+
         fun onAction(action: MovieAction) {
             when (action) {
                 is MovieAction.MovieClicked -> {}
             }
         }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun formatDate(inputDate: String) : String {
-        return formatDateToLocal(inputDate)
-        }
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun formatDate(inputDate: String): String = formatDateToLocal(inputDate)
 
         fun addFavoriteMovie(movie: FavoriteMovieEntity) {
             viewModelScope.launch {
@@ -55,10 +60,15 @@ class MovieViewModel
         }
 
         fun fetchMovies() {
-            fetchData(
-                fetch = { movieRepository.getPopularMovies() },
-                state = _state,
-            )
+
+                 movieRepository
+                    .getPopularMovies() // Fetch paginated data
+                    .cachedIn(viewModelScope) // Cache it in the viewModelScope
+//                    .collect { pagingData ->
+//                        // Collect the flow of PagingData
+//                        _pagingState.value = pagingData // Update the state with paginated data
+//                   }
+
         }
 
         fun fetchMovieDetails(movieId: Int) {

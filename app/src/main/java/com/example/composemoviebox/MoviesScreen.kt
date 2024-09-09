@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.collectAsLazyPagingItems
 
 @Composable
 fun MoviesScreen(
@@ -22,40 +23,61 @@ fun MoviesScreen(
     onAction: (MovieAction) -> Unit = {},
 ) {
 
+    val movieItems = viewModel.moviesData.collectAsLazyPagingItems()
+
     val listState = rememberSaveable(saver = LazyListState.Saver) { LazyListState() }
     LaunchedEffect(Unit) {
         viewModel.fetchMovies()
     }
-    val moviesState by viewModel.state.collectAsState()
+   // val moviesState by viewModel.state.collectAsState()
 
-    when (moviesState) {
-        is ApiResult.Loading -> {
-            // Loading Progres
-            CircularProgressIndicator()
-        }
+    LazyColumn {
+        movieItems?.let {
+            items(movieItems.itemCount){index ->
+                val movie = movieItems[index]
 
-        is ApiResult.Success -> {
-            val movies = (moviesState as ApiResult.Success).data.results
-            when (onAction) {
-
-            }
-            LazyColumn(state = listState) {
-                items(movies) {
-                    MovieListItem(movie = it){
+                if (movie != null) {
+                    MovieListItem(movie = movie) {
                         onAction(MovieAction.MovieClicked(it))
-
+                        
                     }
                 }
             }
         }
-
-        is ApiResult.Error -> {
-            Toast
-                .makeText(
-                    LocalContext.current,
-                    "Error ${(moviesState as ApiResult.Error).exception.message}",
-                    Toast.LENGTH_SHORT,
-                ).show()
-        }
     }
+
+//    when (moviesState) {
+//        is ApiResult.Loading -> {
+//            // Loading Progres
+//            CircularProgressIndicator()
+//        }
+//
+//        is ApiResult.Success -> {
+//            val movies = (moviesState as ApiResult.Success).data.results
+//            when (onAction) {
+//
+//            }
+//            LazyColumn(state = listState) {
+//                items(count = movieItems.itemCount) { index ->
+//                    val movie = movieItems[index]
+//
+//                    if (movie != null) {
+//                        MovieListItem(movie = movie){
+//                            onAction(MovieAction.MovieClicked(it))
+//
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        is ApiResult.Error -> {
+//            Toast
+//                .makeText(
+//                    LocalContext.current,
+//                    "Error ${(moviesState as ApiResult.Error).exception.message}",
+//                    Toast.LENGTH_SHORT,
+//                ).show()
+//        }
+//    }
 }

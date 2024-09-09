@@ -1,5 +1,9 @@
 package com.example.composemoviebox
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -13,16 +17,16 @@ class MovieRepositoryImpl
         private val movieDao: MovieDao
     ) : MovieRepository {
 
-        override fun getPopularMovies(): Flow<ApiResult<MovieResponse>> =
-            flow {
-                emit(ApiResult.Loading())
-                try {
-                    val movies = movieService.getPopularMovies()
-                    emit(ApiResult.Success(movies))
-                } catch (e: Exception) {
-                    emit(ApiResult.Error(e))
-                }
-            }.flowOn(Dispatchers.IO)
+        override fun getPopularMovies(): Flow<PagingData<Movie>> {
+            return Pager(
+                config = PagingConfig(
+                    pageSize = 20,
+                    enablePlaceholders = false
+                ),
+                pagingSourceFactory = { MoviePagingSource(apiKey = BuildConfig.API_KEY, apiService = movieService ) }
+            ).flow
+        }
+
 
     override fun getMovieDetails(movieId: Int): Flow<ApiResult<MovieDetailsResponse>> =
         flow {

@@ -52,7 +52,10 @@ fun MovieListItem(
                 Image(
                     painter =
                         rememberAsyncImagePainter
-                        (model = IMAGE_BASE_URL + movie.poster_path),
+                        (model = IMAGE_BASE_URL + movie.poster_path,
+                                placeholder = painterResource(id = R.drawable.ic_generic_movie_poster),
+                        ),
+
                     contentScale = ContentScale.Crop,
                     contentDescription = null,
                     modifier =

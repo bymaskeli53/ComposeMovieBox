@@ -1,9 +1,10 @@
 package com.example.composemoviebox
 
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
-    fun getPopularMovies(): Flow<ApiResult<MovieResponse>>
+    fun getPopularMovies(): Flow<PagingData<Movie>>
 
     fun getMovieDetails(movieId: Int): Flow<ApiResult<MovieDetailsResponse>>
 
