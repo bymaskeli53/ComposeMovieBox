@@ -45,6 +45,8 @@ fun DetailsScreen(
     when (moviesState) {
         is ApiResult.Success -> {
             val movie = (moviesState as ApiResult.Success).data
+
+
             Column(
                 modifier =
                 Modifier

@@ -80,6 +80,15 @@ dependencies {
 
     val room_version = "2.6.1"
 
+    val paging_version = "3.3.2"
+
+    // paging
+    implementation("androidx.paging:paging-runtime:$paging_version")
+
+    implementation("androidx.paging:paging-compose:$paging_version")
+
+    testImplementation("androidx.paging:paging-common:$paging_version")
+
 
     testImplementation("androidx.room:room-testing:$room_version")
 

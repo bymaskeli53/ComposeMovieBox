@@ -1,5 +1,7 @@
 package com.example.composemoviebox
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +28,11 @@ class MovieViewModel
             when (action) {
                 is MovieAction.MovieClicked -> {}
             }
+        }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun formatDate(inputDate: String) : String {
+        return formatDateToLocal(inputDate)
         }
 
         fun addFavoriteMovie(movie: FavoriteMovieEntity) {
