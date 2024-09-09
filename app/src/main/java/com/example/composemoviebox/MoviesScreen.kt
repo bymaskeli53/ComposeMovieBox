@@ -1,19 +1,28 @@
 package com.example.composemoviebox
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 
 @Composable
@@ -42,6 +51,22 @@ fun MoviesScreen(
                         
                     }
                 }
+            }
+        }
+    }
+
+    movieItems?.apply {
+        when (loadState.refresh) {
+            is LoadState.Loading -> {
+                LoadingIndicator()
+            }
+
+            is LoadState.Error -> {
+                val error = loadState.refresh as LoadState.Error
+                ErrorMessage(message = error.error.localizedMessage ?: "An error occured")
+            }
+            is LoadState.NotLoading -> {
+
             }
         }
     }
@@ -80,4 +105,19 @@ fun MoviesScreen(
 //                ).show()
 //        }
 //    }
+}
+
+@Composable
+fun LoadingIndicator() {
+    Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+        CircularProgressIndicator()
+    }
+}
+
+@Composable
+fun ErrorMessage(message: String) {
+    Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()){
+        Text(text = message, color = Color.Red, modifier = Modifier.padding(16.dp))
+    }
+
 }

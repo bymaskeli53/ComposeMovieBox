@@ -33,14 +33,13 @@ fun MovieListItem(
     onClick: (Int) -> Unit,
 ) {
     Card(
-
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(8.dp),
         modifier =
             Modifier
                 .fillMaxWidth()
                 .background(color = RedMixedOrange)
-                .clickable { movie.id?.let { onClick(it) }},
+                .clickable { movie.id?.let { onClick(it) } },
     ) {
         Row(
             modifier =
@@ -51,11 +50,10 @@ fun MovieListItem(
             Column {
                 Image(
                     painter =
-                        rememberAsyncImagePainter
-                        (model = IMAGE_BASE_URL + movie.poster_path,
-                                placeholder = painterResource(id = R.drawable.ic_generic_movie_poster),
+                        rememberAsyncImagePainter(
+                            model = IMAGE_BASE_URL + movie.poster_path,
+                            placeholder = painterResource(id = R.drawable.ic_generic_movie_poster),
                         ),
-
                     contentScale = ContentScale.Crop,
                     contentDescription = null,
                     modifier =
@@ -73,7 +71,6 @@ fun MovieListItem(
             }
             Spacer(modifier = Modifier.weight(1f))
             Column(modifier = Modifier.align(Alignment.CenterVertically)) {
-
                 Spacer(modifier = modifier.size(12.dp))
 
 //                Image(
