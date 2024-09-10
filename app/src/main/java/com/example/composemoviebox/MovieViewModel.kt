@@ -2,6 +2,7 @@ package com.example.composemoviebox
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -21,6 +22,8 @@ class MovieViewModel
     ) : ViewModel() {
         private val _state = MutableStateFlow<ApiResult<MovieResponse>>(ApiResult.Loading())
         val state: StateFlow<ApiResult<MovieResponse>> = _state
+
+    val listState = LazyListState()
 
         private val _detailState =
             MutableStateFlow<ApiResult<MovieDetailsResponse>>(ApiResult.Loading())

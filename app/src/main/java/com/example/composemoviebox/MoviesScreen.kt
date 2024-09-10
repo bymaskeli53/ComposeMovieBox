@@ -40,7 +40,7 @@ fun MoviesScreen(
     }
    // val moviesState by viewModel.state.collectAsState()
 
-    LazyColumn {
+    LazyColumn(state = listState) {
         movieItems?.let {
             items(movieItems.itemCount){index ->
                 val movie = movieItems[index]
