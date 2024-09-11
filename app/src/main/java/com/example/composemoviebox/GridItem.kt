@@ -22,19 +22,17 @@ fun MovieGridItem(
 ) {
     Image(
         modifier =
-        Modifier
-            .padding(8.dp)
-            .fillMaxHeight()
-            .aspectRatio(0.6f)
-            .clickable { movie.id?.let { onClick(it) }  }
-            .clip(RoundedCornerShape(8.dp)),
-
+            Modifier
+                .padding(8.dp)
+                .fillMaxHeight()
+                .aspectRatio(0.6f)
+                .clickable { movie.id?.let { onClick(it) } }
+                .clip(RoundedCornerShape(8.dp)),
         painter =
-        rememberAsyncImagePainter(
-            model = IMAGE_BASE_URL + movie.poster_path,
-        ),
+            rememberAsyncImagePainter(
+                model = IMAGE_BASE_URL + movie.poster_path,
+            ),
         contentScale = ContentScale.Crop,
         contentDescription = "",
-
     )
 }

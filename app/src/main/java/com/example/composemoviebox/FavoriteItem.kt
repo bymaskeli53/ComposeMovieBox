@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun FavoriteItem(
-    movie: Movie,
+    movie: FavoriteMovieEntity,
     modifier: Modifier = Modifier,
 ) {
     Column(

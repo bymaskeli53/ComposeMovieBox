@@ -12,5 +12,9 @@ interface MovieRepository {
 
     suspend fun removeFavoriteMovie(movie: FavoriteMovieEntity)
 
-    suspend fun getFavoriteMovies()
+    suspend fun getFavoriteMovies() : List<FavoriteMovieEntity>
+
+    suspend fun getFavoriteMovieById(movieId: Int): FavoriteMovieEntity?
+
+    suspend fun removeFromFavorites(movie: FavoriteMovieEntity)
 }

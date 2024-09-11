@@ -23,7 +23,13 @@ class MovieViewModel
         private val _state = MutableStateFlow<ApiResult<MovieResponse>>(ApiResult.Loading())
         val state: StateFlow<ApiResult<MovieResponse>> = _state
 
-    val listState = LazyListState()
+    private val _favoriteMovies = MutableStateFlow<List<FavoriteMovieEntity>>(emptyList())
+    val favoriteMovies: StateFlow<List<FavoriteMovieEntity>> = _favoriteMovies
+
+        private val _isFavorite = MutableStateFlow(false)
+        val isFavorite: StateFlow<Boolean> = _isFavorite
+
+        val listState = LazyListState()
 
         private val _detailState =
             MutableStateFlow<ApiResult<MovieDetailsResponse>>(ApiResult.Loading())
@@ -32,7 +38,7 @@ class MovieViewModel
         private val _pagingState = MutableStateFlow<PagingData<Movie>?>(null)
         val pagingState: Flow<PagingData<Movie>?> = _pagingState
 
-    val moviesData: Flow<PagingData<Movie>> = movieRepository.getPopularMovies()
+        val moviesData: Flow<PagingData<Movie>> = movieRepository.getPopularMovies()
 
         fun onAction(action: MovieAction) {
             when (action) {
@@ -55,23 +61,21 @@ class MovieViewModel
             }
         }
 
-        fun getFavoriteMovies() {
-            viewModelScope.launch {
-                val favorites = movieRepository.getFavoriteMovies()
-                // Handle favorite movies
-            }
+    fun fetchFavoriteMovies() {
+        viewModelScope.launch {
+            val movies = movieRepository.getFavoriteMovies()
+            _favoriteMovies.value = movies // Veriyi state'e aktarıyoruz
         }
+    }
 
         fun fetchMovies() {
-
-                 movieRepository
-                    .getPopularMovies() // Fetch paginated data
-                    .cachedIn(viewModelScope) // Cache it in the viewModelScope
+            movieRepository
+                .getPopularMovies() // Fetch paginated data
+                .cachedIn(viewModelScope) // Cache it in the viewModelScope
 //                    .collect { pagingData ->
 //                        // Collect the flow of PagingData
 //                        _pagingState.value = pagingData // Update the state with paginated data
 //                   }
-
         }
 
         fun fetchMovieDetails(movieId: Int) {
@@ -96,4 +100,24 @@ class MovieViewModel
                 }
             }
         }
+
+        fun toggleFavorite(movie: FavoriteMovieEntity) {
+            viewModelScope.launch {
+                val existingMovie = movieRepository.getFavoriteMovieById(movie.id)
+                if (existingMovie == null) {
+                    movieRepository.addFavoriteMovie(movie)
+                    _isFavorite.value = true
+                } else {
+                    movieRepository.removeFromFavorites(existingMovie)
+                    _isFavorite.value = false
+                }
+            }
+        }
+
+    private fun checkFavoriteStatus(movieId: Int) {
+        viewModelScope.launch {
+            val movieInFavorites = movieRepository.getFavoriteMovieById(movieId)
+            _isFavorite.value = movieInFavorites != null
+        }
+    }
     }

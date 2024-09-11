@@ -41,6 +41,8 @@ fun MoviesScreen(
 ) {
     val movieItems = viewModel.moviesData.collectAsLazyPagingItems()
 
+
+
     // Grid ve Linear View arası geçiş için state'i rememberSaveable ile kalıcı hale getiriyoruz
     var isGrid by rememberSaveable { mutableStateOf(false) }
 
@@ -54,9 +56,9 @@ fun MoviesScreen(
         Button(
             onClick = { isGrid = !isGrid },
             modifier =
-                Modifier
-                    .width(128.dp)
-                    .padding(16.dp),
+            Modifier
+                .width(128.dp)
+                .padding(16.dp),
         ) {
             Image(
                 painter = painterResource(id = if (isGrid) R.drawable.grid else R.drawable.linear),
@@ -64,41 +66,6 @@ fun MoviesScreen(
                 modifier = Modifier.size(24.dp)
             )
         }
-
-        // LazyColumn veya LazyVerticalGrid'i state'e göre göster
-        if (isGrid) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                movieItems?.let {
-                    items(movieItems.itemCount) { index ->
-                        val movie = movieItems[index]
-
-                        if (movie != null) {
-                            MovieGridItem(movie = movie) {
-                                onAction(MovieAction.MovieClicked(it))
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
-                movieItems?.let {
-                    items(movieItems.itemCount) { index ->
-                        val movie = movieItems[index]
-
-                        if (movie != null) {
-                            MovieListItem(movie = movie) {
-                                onAction(MovieAction.MovieClicked(it))
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         movieItems?.apply {
             when (loadState.refresh) {
                 is LoadState.Loading -> {
@@ -111,10 +78,53 @@ fun MoviesScreen(
                 }
 
                 is LoadState.NotLoading -> {
-                    // Yüklenme tamamlandı
+                    if (isGrid) {
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(2),
+                            modifier = Modifier.fillMaxSize(),
+                        ) {
+                            movieItems?.let {
+                                items(movieItems.itemCount) { index ->
+                                    val movie = movieItems[index]
+
+                                    if (movie != null) {
+                                        MovieGridItem(movie = movie) {
+                                            onAction(MovieAction.MovieClicked(it))
+                                        }
+                                    }
+                                }
+                            }
+                           item{
+                               if (loadState.append is LoadState.Loading) {
+                                LoadingIndicator()
+                                }
+                           }
+                        }
+                    } else {
+                        LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
+                            movieItems?.let {
+                                items(movieItems.itemCount) { index ->
+                                    val movie = movieItems[index]
+
+                                    if (movie != null) {
+                                        MovieListItem(movie = movie) {
+                                            onAction(MovieAction.MovieClicked(it))
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                 }
             }
+
         }
+
+        // LazyColumn veya LazyVerticalGrid'i state'e göre göster
+
+
+
     }
 }
 
