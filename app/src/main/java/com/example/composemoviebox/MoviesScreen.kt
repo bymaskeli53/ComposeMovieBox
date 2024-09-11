@@ -84,7 +84,9 @@ fun MoviesScreen(
                             modifier = Modifier.fillMaxSize(),
                         ) {
                             movieItems?.let {
-                                items(movieItems.itemCount) { index ->
+                                items(count = movieItems.itemCount,key = {
+                                    movieItems[it]?.id ?: it
+                                }) { index ->
                                     val movie = movieItems[index]
 
                                     if (movie != null) {
@@ -103,7 +105,9 @@ fun MoviesScreen(
                     } else {
                         LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
                             movieItems?.let {
-                                items(movieItems.itemCount) { index ->
+                                items(count = movieItems.itemCount, key = {
+                                    movieItems[it]?.id ?: it
+                                }) { index ->
                                     val movie = movieItems[index]
 
                                     if (movie != null) {
