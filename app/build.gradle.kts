@@ -37,6 +37,7 @@ android {
 
 
         buildConfigField("String", "API_KEY", "\"${localProperties["API_KEY"]}\"")
+        buildConfigField("String", "GEMINI_API_KEY", "\"${localProperties["GEMINI_API_KEY"]}\"")
 
         vectorDrawables {
             useSupportLibrary = true
@@ -145,6 +146,9 @@ dependencies {
     // coil
     implementation("io.coil-kt:coil:2.5.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
+
+    // Gemini
+    implementation("com.google.ai.client.generativeai:generativeai:0.7.0")
 
 
     // Compose - Viewmodel

@@ -18,6 +18,8 @@ fun FavoritesScreen(
 
     LaunchedEffect(Unit) {
         viewModel.fetchFavoriteMovies()
+
+
     }
 
     LazyColumn {

@@ -1,5 +1,6 @@
 package com.example.composemoviebox
 
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -20,17 +21,21 @@ class FakeMovieRepository : MovieRepository {
             movieDetailsResponse = response
     }
 
-    override fun getPopularMovies(): Flow<ApiResult<MovieResponse>> = flow {
-        emit(ApiResult.Loading())
-
-        if (shouldReturnError) {
-            emit(ApiResult.Error(RuntimeException("Error occurred")))
-        } else {
-            moviesResponse?.let {
-                emit(ApiResult.Success(it))
-            }
-        }
+    override fun getPopularMovies(): Flow<PagingData<Movie>> {
+        TODO("Not yet implemented")
     }
+
+//    override fun getPopularMovies(): Flow<ApiResult<MovieResponse>> = flow {
+//        emit(ApiResult.Loading())
+//
+//        if (shouldReturnError) {
+//            emit(ApiResult.Error(RuntimeException("Error occurred")))
+//        } else {
+//            moviesResponse?.let {
+//                emit(ApiResult.Success(it))
+//            }
+//        }
+//    }
 
     override fun getMovieDetails(movieId: Int): Flow<ApiResult<MovieDetailsResponse>> = flow {
         emit(ApiResult.Loading())
@@ -52,8 +57,17 @@ class FakeMovieRepository : MovieRepository {
 
     }
 
-    override suspend fun getFavoriteMovies() {
+    override suspend fun getFavoriteMovies(): List<FavoriteMovieEntity> {
+        TODO("Not yet implemented")
+    }
 
+
+    override suspend fun getFavoriteMovieById(movieId: Int): FavoriteMovieEntity? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun removeFromFavorites(movie: FavoriteMovieEntity) {
+        TODO("Not yet implemented")
     }
 
 
