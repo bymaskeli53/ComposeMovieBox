@@ -45,6 +45,7 @@ fun DetailsScreen(
     LaunchedEffect(Unit) {
         if (movieId != null) {
             viewModel.fetchMovieDetails(movieId)
+            viewModel.checkFavoriteStatus(movieId)
         }
     }
     val moviesState by viewModel.detailsState.collectAsState()

@@ -114,7 +114,7 @@ class MovieViewModel
             }
         }
 
-    private fun checkFavoriteStatus(movieId: Int) {
+    fun checkFavoriteStatus(movieId: Int) {
         viewModelScope.launch {
             val movieInFavorites = movieRepository.getFavoriteMovieById(movieId)
             _isFavorite.value = movieInFavorites != null
