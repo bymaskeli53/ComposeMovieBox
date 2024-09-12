@@ -14,7 +14,7 @@ fun BottomNavigationBar(
     modifier: Modifier = Modifier,
     navController: NavController,
 ) {
-    val items = listOf(Screen.MoviesScreen, Screen.FavoritesScreen)
+    val items = listOf(Screen.MoviesScreen, Screen.FavoritesScreen,Screen.ChatScreen)
 
     NavigationBar {
         items.forEach { screen ->

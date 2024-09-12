@@ -37,5 +37,8 @@ fun Navigation(navController : NavHostController,modifier : Modifier = Modifier)
             FavoritesScreen()
         }
 
+        composable(route = Screen.ChatScreen.route){
+            ChatScreen()
+        }
     }
 }
