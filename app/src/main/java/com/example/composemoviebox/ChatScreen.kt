@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -24,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,11 +33,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun ChatScreen(chatViewModel: ChatViewModel = hiltViewModel()) {
     var userInput by remember { mutableStateOf("") }
     val chatMessages = remember { mutableStateListOf<Pair<String, Boolean>>() }
+
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier =
@@ -45,6 +51,7 @@ fun ChatScreen(chatViewModel: ChatViewModel = hiltViewModel()) {
     ) {
         // Chat messages
         LazyColumn(
+            state = listState,
             modifier = Modifier.weight(1f),
             reverseLayout = true, // Messages come from bottom to top
         ) {
@@ -77,6 +84,10 @@ fun ChatScreen(chatViewModel: ChatViewModel = hiltViewModel()) {
                         chatViewModel.sendMessage(userInput)
                        // chatMessages.add("AI Response to '$userInput'" to false) // AI message
                         userInput = "" // Clear input field
+
+                        coroutineScope.launch {
+                            listState.animateScrollToItem(0)
+                        }
                     }
                 },
                 shape = RoundedCornerShape(50),
