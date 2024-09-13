@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -39,15 +40,16 @@ import kotlinx.coroutines.launch
 fun ChatScreen(chatViewModel: ChatViewModel = hiltViewModel()) {
     var userInput by remember { mutableStateOf("") }
     val chatMessages = remember { mutableStateListOf<Pair<String, Boolean>>() }
+    val controller = LocalSoftwareKeyboardController.current
 
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
     ) {
         // Chat messages
         LazyColumn(
@@ -79,11 +81,11 @@ fun ChatScreen(chatViewModel: ChatViewModel = hiltViewModel()) {
             Button(
                 onClick = {
                     if (userInput.isNotBlank()) {
-
-                       // chatMessages.add(userInput.trim() to true) // User message
+                        // chatMessages.add(userInput.trim() to true) // User message
                         chatViewModel.sendMessage(userInput)
-                       // chatMessages.add("AI Response to '$userInput'" to false) // AI message
+                        // chatMessages.add("AI Response to '$userInput'" to false) // AI message
                         userInput = "" // Clear input field
+                        controller?.hide()
 
                         coroutineScope.launch {
                             listState.animateScrollToItem(0)
