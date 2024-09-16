@@ -1,6 +1,6 @@
 # ComposeMovieBox
 
-ComposeMovieBox is an android application newer version of my previous developed Movie Box App
+ComposeMovieBox is an Android application, a newer version of my previous developed [Movie Box App](https://github.com/bymaskeli53/MovieBox).
 
 ## Extra Features
 - **Jetpack Compose:** This app made with Jetpack Compose
