@@ -163,6 +163,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation("android.arch.core:core-testing:1.1.1")
 
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.6.0-alpha05")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.0-alpha05")
+
+
 
 
 }
