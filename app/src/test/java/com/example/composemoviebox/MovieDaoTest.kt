@@ -3,6 +3,9 @@ package com.example.composemoviebox
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.composemoviebox.data.FavoriteMovieEntity
+import com.example.composemoviebox.data.MovieDao
+import com.example.composemoviebox.data.MovieDatabase
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNull
 import kotlinx.coroutines.runBlocking

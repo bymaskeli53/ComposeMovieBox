@@ -1,6 +1,11 @@
 package com.example.composemoviebox
 
 import app.cash.turbine.test
+import com.example.composemoviebox.data.ApiResult
+import com.example.composemoviebox.model.Movie
+import com.example.composemoviebox.model.MovieDetailsResponse
+import com.example.composemoviebox.model.MovieResponse
+import com.example.composemoviebox.viewmodel.MovieViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
